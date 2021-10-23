@@ -32,11 +32,11 @@ type Book struct {
 var db *gorm.DB
 var err error
 
-var (
-	person = &Person{Name: "Rohan", Email: "rohan@email.com"}
-	books  = []Book{{Title: "Book 1", Author: "Author 1", CallNumber: 123, PersonID: 2},
-		{Title: "Book 2", Author: "Author 2", CallNumber: 1234, PersonID: 3}}
-)
+// var (
+// 	person = &Person{Name: "Rohan", Email: "rohan@email.com"}
+// 	books  = []Book{{Title: "Book 1", Author: "Author 1", CallNumber: 123, PersonID: 2},
+// 		{Title: "Book 2", Author: "Author 2", CallNumber: 1234, PersonID: 3}}
+// )
 
 func main() {
 
@@ -66,16 +66,15 @@ func main() {
 	//Mux Router
 
 	router := mux.NewRouter()
+	fmt.Println("API running")
 
 	router.HandleFunc("/people", GetPeople).Methods("GET")
-
 	log.Fatal(http.ListenAndServe(":8080", router))
-	fmt.Println("API running")
 
 }
 
 func GetPeople(w http.ResponseWriter, r *http.Request) {
 	var people []Person
 	db.Find(&people)
-	json.NewEncoder(w).Encode(&person)
+	json.NewEncoder(w).Encode(&people)
 }
